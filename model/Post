@@ -4,25 +4,25 @@ const PostSchema = new mongoose.Schema({
 
     title: {
         type: String,
-        required: true
+        required:false
     },
     author:{
         type: String,
-        required: true
+        required:false
     },
-    link:{
+    urlstring:{
         type: String,
-        required: true
+        required:false
     },
     university:{
         type: String,
-        required: false
+        required:false
     },
     datepub:{
         type: String,
-        required: true
+        required:false
     }
 
 });
 
-module.exports = mongoose.model('academic',PostSchema);
+module.exports = mongoose.model('academics',PostSchema);

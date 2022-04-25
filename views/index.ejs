@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Academic Paper Management</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="./css/mdb.min.css" />
+  </head>
+  <body>
+   
+    <!-- Start your project here-->
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center" style="height: 50vh">
+        <div class="text-center">
+           
+            <h1>  Academic Paper Management  </h1>
+           
+            <div class="input-group" >
+              <div class="form-outline" >
+              
+               <input type="search" id="form1" class="form-control" size="150px" "/>
+               <label class="form-label" for="form1">Search</label>
+              </div>
+
+               <button type="button" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+
+              
+            </div>
+           </div>
+        </div>
+      </div>   
+      <div class="container"> 
+            <div class="box-nav d-flex-justify-between">
+               <a href="/add_paper" class="border-shadow">
+                   <span class="text-gradient"> New Paper <i class="fa-solid fa-memo"></i></i></span>
+               </a>
+            </div> 
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Url</th>
+                    <th scope="col">University</th>
+                    <th scope="col">Date pub</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var i = 0; i < papers.length; i++){ %>
+                                 
+                  <tr>
+                    <th scope="row"><%= papers[i].title %></th>
+                    <td><%= papers[i].author %></td>
+                    <td><%= papers[i].urlstring %></td>
+                    <td><%= papers[i].university %></td>
+                    <td><%= papers[i].datepub %></td>
+                    <td>
+                      <a href="/update_paper?id=<%= papers[i]._id %>" class="btn border-shadow update">
+                        <span class="text-gradient"> <i class="fas fa-pencil-alt"></i></span>
+                      </a>
+                      <a class="btn border-shadow delete">
+                        <span class="text-gradient"> <i class="fas fa-times"></i></span>
+                      </a>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            
+            </div>     
+
+
+          
+           
+          
+    <!-- End your project here-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="./js/mdb.min.js"></script>
+   
+
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+  </body>
+</html>
