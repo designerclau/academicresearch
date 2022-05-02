@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
     <!-- MDB -->
-    <link rel="stylesheet" href="./css/mdb.min.css" />
+    <link  rel="stylesheet" href="./css/mdb.min.css" />
   </head>
   <body>
    
@@ -36,7 +36,7 @@
                 <span class="text-gradient"> <i class="fas fa-angle-double-left"></i> All Paper's </span>
              </a>
         </div> 
-        <form action="/api/papers" method="POST" id="add_paper">
+        <form action="/api/papers" method="POST" id="add_paper" enctype="multipart/form-data">
 
             <div class="input-group mb-3">
                <input type="text" class="form-control" name="title" placeholder="Title" aria-label="Title" aria-describedby="title">
@@ -48,8 +48,10 @@
             </div>
            
             <div class="input-group mb-3">
-               <input type="text" class="form-control" id="urlstring" placeholder="URL" aria-describedby="urlstring">
+               <input type="file" class="form-control" id="paperfile" accept="application/pdf" name="paperfile" placeholder="File" aria-describedby="paperfile">
             </div>
+
+            
 
             <div class="input-group mb-3">
               <input type="text" class="form-control" name="university" placeholder="University" aria-label="University" aria-describedby="university">

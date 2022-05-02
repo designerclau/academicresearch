@@ -10,7 +10,7 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required:false
     },
-    urlstring:{
+    paperfile:{
         type: String,
         required:false
     },
@@ -21,6 +21,10 @@ const PostSchema = new mongoose.Schema({
     datepub:{
         type: String,
         required:false
+    },
+    tags:{
+        type: Array(),
+        required:true
     }
 
 });

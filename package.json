@@ -14,8 +14,10 @@
   "author": "Claudinea de Almeida",
   "license": "ISC",
   "dependencies": {
+    "@supercharge/collections": "^4.3.0",
     "axios": "^0.26.1",
     "body-parser": "^1.20.0",
+    "connect-flash": "^0.1.1",
     "dotenv": "^16.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
@@ -24,7 +26,9 @@
     "mdb-ui-kit": "^3.11.0",
     "mongoose": "^6.2.10",
     "morgan": "^1.10.0",
-    "path": "^0.12.7"
+    "multer": "^1.4.4",
+    "path": "^0.12.7",
+    "stopword": "^2.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

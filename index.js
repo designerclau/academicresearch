@@ -12,6 +12,7 @@ require('dotenv/config');
 const session = require('express-session');
 
 
+
 let responseObj = {
     "status": "",
     "msg": "",
@@ -22,10 +23,7 @@ let responseObj = {
 const app = express();
 //requests timing
 app.use(morgan('tiny'));
-
 app.use(express.json());
-
-
 
 //parser request to bodyparser
 //app.use(bodyparser.json());
@@ -37,16 +35,19 @@ app.use('/', require('./routes/route'));
 
 
 
+//Express Messages Middleware
+
+
+
 app.use("/css", express.static(path.join(__dirname,"node_modules/mdb-ui-kit/css")));
 app.use("/js", express.static(path.join(__dirname,"node_modules/mdb-ui-kit/js")));
 
-  
-  //connect to database
-  mongoose.connect( process.env.DB_connection, () =>
+//connect to database
+mongoose.connect( process.env.DB_connection, () =>
                   console.log('Connected to Db')
-   );
+ );
 
 
-  const port = process.env.PORT || 3001;
-  app.listen(port, () => console.log(`Listening on port ${port} `));
+const port = process.env.PORT || 3001;
+app.listen(port, () => console.log(`Listening on port ${port} `));
   
