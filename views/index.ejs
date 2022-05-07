@@ -1,101 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Academic Paper Management</title>
-    <!-- MDB icon -->
-    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link rel="stylesheet" href="./css/mdb.min.css" />
-  </head>
-  <body>
-   
-    <!-- Start your project here-->
-    <div class="container">
-      <div class="d-flex justify-content-center align-items-center" style="height: 50vh">
-        <div class="text-center">
-           
-            <h1>  Academic Paper Management  </h1>
-           
-            <div class="input-group" >
-              <div class="form-outline" >
-              
-               <input type="search" id="form1" class="form-control" size="150px" "/>
-               <label class="form-label" for="form1">Search</label>
-              </div>
 
-               <button type="button" class="btn btn-primary">
-                <i class="fas fa-search"></i>
-              </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="_token" content="{{ csrf_token() }}">
+  <title>Academic Paper Management</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="./css/mdb.min.css" />
+</head>
 
-              
-            </div>
-           </div>
+<body>
+
+  <!-- Start your project here-->
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center" style="height: 50vh">
+      <div class="text-center">
+
+        <h1> Academic Paper Management </h1>
+
+        <div class="input-group">
+
+          <form action="/search" method="get">
+            <div class="form-outline"></div>
+            <input type="search" id="form1" class="form-control" size="150px" "/>
+               <label class=" form-label" for="form1">Search</label>
         </div>
-      </div>   
-      <div class="container"> 
-            <div class="box-nav d-flex-justify-between">
-               <a href="/add_paper" class="border-shadow">
-                   <span class="text-gradient"> New Paper <i class="fa-solid fa-memo"></i></i></span>
-               </a>
-            </div> 
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">File</th>
-                    <th scope="col">University</th>
-                    <th scope="col">Date pub</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for(var i = 0; i < papers.length; i++){ %>
-                                 
-                  <tr>
-                    <th scope="row"><%= papers[i].title %></th>
-                    <td><%= papers[i].author %></td>
-                    <td><%= papers[i].paperfile %></td>
-                    <td><%= papers[i].university %></td>
-                    <td><%= papers[i].datepub %></td>
-                    <td>
-                      <a href="/update_paper?id=<%= papers[i]._id %>" class="btn border-shadow update">
-                        <span class="text-gradient"> <i class="fas fa-pencil-alt"></i></span>
-                      </a>
-                      <a class="btn border-shadow delete">
-                        <span class="text-gradient"> <i class="fas fa-times"></i></span>
-                      </a>
-                    </td>
-                  </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            
-            </div>     
+
+        <button type="submit" class="btn btn-primary">
+          <i class="fas fa-search"></i>
+        </button>
+        </form>
 
 
-          
-           
-          
-    <!-- End your project here-->
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="container">
+    <div class="box-nav d-flex-justify-between">
+      <a href="/add_paper" class="border-shadow">
+        <span class="text-gradient"> New Paper <i class="fa-solid fa-memo"></i></i></span>
+      </a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">File</th>
+          <th scope="col">University</th>
+          <th scope="col">Date pub</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(var i=0; i < papers.length; i++){ %>
 
-    <!-- MDB -->
-    <script type="text/javascript" src="./js/mdb.min.js"></script>
-   
+          <tr>
+            <th scope="row">
+              <%= papers[i].title %>
+            </th>
+            <td>
+              <%= papers[i].author %>
+            </td>
+            <td>
+              <%= papers[i].paperfile %>
+            </td>
+            <td>
+              <%= papers[i].university %>
+            </td>
+            <td>
+              <%= papers[i].datepub %>
+            </td>
+            <td>
+              <a href="/update_paper?id=<%= papers[i]._id %>" class="btn border-shadow update">
+                <span class="text-gradient"> <i class="fas fa-pencil-alt"></i></span>
+              </a>
+            <td>
 
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
-  </body>
+              <a class="btn border-shadow delete" id="delete" data_id="<%= papers[i]._id %>">
+                <span class="text-gradient"> <i class="fas fa-times"></i></span>
+              </a>
+
+            </td>
+
+
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+
+  </div>
+
+
+
+
+
+  <!-- End your project here-->
+
+  <!-- MDB -->
+  <script type="text/javascript" src="./js/mdb.min.js"></script>
+
+
+  <!-- Custom scripts -->
+  <script type="text/javascript"></script>
+  <script>
+    $(document).ready(function () {
+      $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+      $ondelete=$(".table tbody td a.delete")
+      $ondelete.click(function () {
+
+        var id = $(this).attr("data_id")
+        console.log(id);
+        var request = {
+          "url": 'http://localhost:3002/api/papers/'+id,
+          "method": "DELETE"
+
+        }
+
+        if (confirm("Do you want to delete this record?")) {
+          $.ajax(request).done(function (response) {
+            alert("Data deleted successfully!")
+          })
+          location.reload();
+        }
+      })
+    })
+  </script>
+</body>
+
 </html>

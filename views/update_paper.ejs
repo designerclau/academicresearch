@@ -1,106 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Academic Paper Management</title>
-    <!-- MDB icon -->
-    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link rel="stylesheet" href="./css/mdb.min.css" />
-  </head>
-  <body>
-   
-    <!-- Start your project here-->
-   
-    <div class="container"> 
-       <div class="d-flex justify-content-center align-items-center" style="height: 20vh">
-         <div class="text-center">
-           
-            <h1>  Update Academic Paper  </h1>
-         </div>
-       </div>
-        <div class="box-nav d-flex-justify-between style="height: 10vh">
-             <a href="/" class="border-shadow">
-                <span class="text-gradient"> <i class="fas fa-angle-double-left"></i> All Paper's </span>
-             </a>
-        </div> 
-        <form method="Post" id="update_paper">
 
-            <div class="input-group mb-3">
-              <input type="hidden" class="form-control" name="id" value="<%= papers._id %>">
-               <input type="text" class="form-control" name="title" value="<%= papers.title %>" placeholder="Title" aria-label="Title" aria-describedby="title">
-            </div>
-            
-            <div class="input-group mb-3">
-               <input type="text" class="form-control" name="author" value="<%= papers.author %>" placeholder="Author" aria-label="Author" aria-describedby="title">
-              
-            </div>
-           
-            <div class="input-group mb-3">
-                 <input type="text" class="form-control" id="paperfile" value="<%= papers.paperfile %>" placeholder="paperfile" aria-describedby="paperfile">
-            </div>
-
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="university" value="<%= papers.university %>" placeholder="University" aria-label="University" aria-describedby="university">
-           </div>
-           
-           <div class="input-group mb-3">
-              <input type="text" class="form-control" name="datepub" value="<%= papers.datepub %>" placeholder="Publication Date" aria-label="datepub" aria-describedby="datepub">
-             
-           </div>
-
-          <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-dark">Save <i class="fa-solid fa-floppy-disk"></i></button>
-            <button type="button" class="btn btn-warning">
-               <span class="text-gradient"> Cancel <i class="fas fa-times"></i></span>
-            </button>
-          </div>
-
-        </form>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Academic Paper Management</title>
+  <!-- MDB icon -->
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
-            </div>     
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="./css/mdb.min.css" />
+</head>
 
-    <!-- End your project here-->
+<body>
 
-    <!-- MDB -->
-    <script type="text/javascript" src="./js/mdb.min.js"></script>
-    <script type="submit">
-      $("#update_paper").submit(function(event){
+  <!-- Start your project here-->
+
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center" style="height: 20vh">
+      <div class="text-center">
+
+        <h1> Update Academic Paper </h1>
+      </div>
+    </div>
+    <div class="box-nav d-flex-justify-between style=" height: 10vh">
+      <a href="/" class="border-shadow">
+        <span class="text-gradient"> <i class="fas fa-angle-double-left"></i> All Paper's </span>
+      </a>
+    </div>
+
+    <form method="POST" id="update_paper">
+
+
+      <div class="input-group mb-3">
+        <input type="hidden" class="form-control" name="id" value="<%= papers._id %>">
+        <input type="text" class="form-control" name="title" value="<%= papers.title %>" placeholder="Title"
+          aria-label="Title" aria-describedby="title">
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="author" value="<%= papers.author %>" placeholder="Author"
+          aria-label="Author" aria-describedby="title">
+
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" id="paperfile" value="<%= papers.paperfile %>" placeholder="paperfile"
+          aria-describedby="paperfile">
+        <input type="hidden" class="form-control" id="oldfile" value="<%= papers.paperfile %>" placeholder="paperfile"
+          aria-describedby="paperfile">
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="university" value="<%= papers.university %>"
+          placeholder="University" aria-label="University" aria-describedby="university">
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="datepub" value="<%= papers.datepub %>"
+          placeholder="Publication Date" aria-label="datepub" aria-describedby="datepub">
+
+      </div>
+
+      <div class="col-md-12 text-center">
+        <button type="submit" id="subbutton" class="btn btn-dark">Save <i class="fa-solid fa-floppy-disk"></i></button>
+        <button type="button" class="btn btn-warning">
+          <span class="text-gradient"> Cancel <i class="fas fa-times"></i></span>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- End your project here-->
+
+  <!-- MDB -->
+ 
+  <script>
+   
+      $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+      $("#update_paper").submit(function (event) {
+
         event.preventDefault();
         var unindexed_array = $(this).serializeArray();
-        var data ={};
+        var data = {};
 
-        $.map(unindexed_array,function(n,i){
-           data[n['title']]= n['value']
-         })
-         console.log(data);
-         var request = {
-           "url":'http://localhost:3001/api/papers/${data.id}',
-           "method":"PUT",
-           "data":data
-          }
+        $.map(unindexed_array, function (n, i) {
+          data[n['name']] = n['value']
 
-        $.ajax(request).done(function(response){
-        alert("Data updated successfuly")
-         })
+        })
+        console.log(data, "Estou no script");
+        var request = {
+          "url": 'http://localhost:3002/api/papers/' + data.id,
+          "method": "PUT",
+          "data": data
+        }
 
+        $.ajax(request).done(function (response) {
+          alert("Data updated successfuly")
+          
+          location.href = "/update_paper";
+        })
+        
 
       })
-    </script> 
-    
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
-  </body>
+
+   
+
+  </script>
+
+  <!-- Custom scripts -->
+  <script type="text/javascript"></script>
+</body>
+
 </html>

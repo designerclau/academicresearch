@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-//var paperDB = require('../model/Post');
+var paperDB = require('../model/Post');
 const services = require('../services/render');
 const controller = require('../controller');
 const multer = require('multer');
@@ -29,17 +29,26 @@ route.get('/add_paper', services.add_paper);
 
 route.get('/update_paper', services.update_paper);
 
+
+
 //API to create users
 route.post('/api/papers', upload, controller.create);
 
+////API to find text
+route.get('/look/:text', controller.findtext);
+
+route.get('/search', controller.search);
 
 //retrieve and return all papers or a single one
 route.get('/api/papers', controller.find);
 
 //update paper by id
-route.put('/api/papers/:id', controller.update);
+route.put('/api/papers/:id', upload, controller.update);
 
 //delete paper by id
 route.delete('/api/papers/:id', controller.delete);
+
+route.get('/searchingbytext', controller.searchingbytext);
+
 
 module.exports = route

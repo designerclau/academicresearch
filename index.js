@@ -10,7 +10,7 @@ const path = require('path');
 const res = require('express/lib/response');
 require('dotenv/config');
 const session = require('express-session');
-
+const cors = require("cors");
 
 
 let responseObj = {
@@ -32,6 +32,7 @@ app.use(bodyparser.urlencoded({extended:true}));
 //set view engine
 app.set('view engine','ejs');
 app.use('/', require('./routes/route'));
+app.use(cors());
 
 
 
@@ -45,9 +46,11 @@ app.use("/js", express.static(path.join(__dirname,"node_modules/mdb-ui-kit/js"))
 //connect to database
 mongoose.connect( process.env.DB_connection, () =>
                   console.log('Connected to Db')
+
+                  
  );
 
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`Listening on port ${port} `));
   

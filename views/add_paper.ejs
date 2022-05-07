@@ -1,89 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Academic Paper Management</title>
-    <!-- MDB icon -->
-    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
-    <!-- MDB -->
-    <link  rel="stylesheet" href="./css/mdb.min.css" />
-  </head>
-  <body>
-   
-    <!-- Start your project here-->
-   
-    <div class="container"> 
-       <div class="d-flex justify-content-center align-items-center" style="height: 20vh">
-         <div class="text-center">
-           
-            <h1>  New Academic Paper  </h1>
-         </div>
-       </div>
-        <div class="box-nav d-flex-justify-between style="height: 10vh">
-             <a href="/" class="border-shadow">
-                <span class="text-gradient"> <i class="fas fa-angle-double-left"></i> All Paper's </span>
-             </a>
-        </div> 
-        <form action="/api/papers" method="POST" id="add_paper" enctype="multipart/form-data">
 
-            <div class="input-group mb-3">
-               <input type="text" class="form-control" name="title" placeholder="Title" aria-label="Title" aria-describedby="title">
-            </div>
-            
-            <div class="input-group mb-3">
-               <input type="text" class="form-control" name="author" placeholder="Author" aria-label="Author" aria-describedby="title">
-              
-            </div>
-           
-            <div class="input-group mb-3">
-               <input type="file" class="form-control" id="paperfile" accept="application/pdf" name="paperfile" placeholder="File" aria-describedby="paperfile">
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Academic Paper Management</title>
+  <!-- MDB icon -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+  <!-- MDB -->
+  <link rel="stylesheet" href="./css/mdb.min.css" />
+</head>
 
-            
+<body>
 
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="university" placeholder="University" aria-label="University" aria-describedby="university">
-           </div>
-           
-           <div class="input-group mb-3">
-              <input type="text" class="form-control" name="datepub" placeholder="Publication Date" aria-label="datepub" aria-describedby="datepub">
-             
-           </div>
+  <!-- Start your project here-->
 
-          <div class="col-md-12 text-center">
-            <button type="submit" class="btn btn-dark">Save <i class="fa-solid fa-floppy-disk"></i></button>
-            <button type="button" class="btn btn-warning">
-               <span class="text-gradient"> Cancel <i class="fas fa-times"></i></span>
-            </button>
-          </div>
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center" style="height: 20vh">
+      <div class="text-center">
 
-        </form>
-            
-            
-            </div>     
+        <h1> New Academic Paper </h1>
+      </div>
+    </div>
+    <div class="box-nav d-flex-justify-between style=" height: 10vh">
+      <a href="/" class="border-shadow">
+        <span class="text-gradient"> <i class="fas fa-angle-double-left"></i> All Paper's </span>
+      </a>
+    </div>
+    <form action="/api/papers" method="POST" id="add_paper" enctype="multipart/form-data">
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="title" placeholder="Title" aria-label="Title"
+          aria-describedby="title">
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="author" placeholder="Author" aria-label="Author"
+          aria-describedby="title">
+
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="file" class="form-control" id="paperfile" accept="application/pdf" name="paperfile"
+          placeholder="File" aria-describedby="paperfile">
+      </div>
 
 
-          
-           
-          
-    <!-- End your project here-->
 
-    <!-- MDB -->
-    <script type="text/javascript" src="./js/mdb.min.js"></script>
-    <script src="../services/conf.js"></script>
-    <!-- Custom scripts -->
-    <script type="text/javascript"></script>
-  </body>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="university" placeholder="University" aria-label="University"
+          aria-describedby="university">
+      </div>
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" name="datepub" placeholder="Publication Date" aria-label="datepub"
+          aria-describedby="datepub">
+
+      </div>
+
+      <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-dark">Save <i class="fa-solid fa-floppy-disk"></i></button>
+        <button type="button" class="btn btn-warning">
+          <span class="text-gradient"> Cancel <i class="fas fa-times"></i></span>
+        </button>
+      </div>
+
+    </form>
+
+
+  </div>
+
+
+
+
+
+  <!-- End your project here-->
+
+  <!-- MDB -->
+  <!-- Custom scripts -->
+  <script type="text/javascript"></script>
+  <script>
+    // when form is submitted
+    $("#add_paper").submit(function () {
+      alert("Paper inserted successfully.");
+    });
+
+  </script>
+</body>
+
 </html>

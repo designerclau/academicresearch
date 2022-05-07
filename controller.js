@@ -1,7 +1,11 @@
 var paperDB = require('./model/Post');
 const multer = require('multer');
 const { vary } = require('express/lib/response');
+//const { checkout } = require('./routes/route');
+const conf = require('./services/conf.js');
 sw = require('stopword');
+const fs = require('fs');
+//const { collection } = require('./model/Post');
 
 
 
@@ -99,7 +103,41 @@ exports.find = (req, res) => {
 
 }
 
+//list the title or body from the database * working
+
+exports.findtext = async(req, res) => {
+
+    stopwords = ['i','me','my','myself','we','our','ours','ourselves','you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now']
+
+    var query = req.params.text;
+    console.log(query);
+    try
+    {
+      // remove stopwords is not working
+      // var newString = sw.removeStopwords(query);
+       var queryString=JSON.stringify(query);
+      // const paper = await paperDB.find({"$tags": { $search: queryString }});
+      
+      const paper = await paperDB.find({"tags": { $in: ["blog"] }}).pretty()
+       res.json(paper);
+    } catch (error){
+        res.status(500).json({ message: error.message});
+    }
+    
+}
+
+
+/* GET search page. */
+exports.search = async(req, res) => {
+
+    var searchParams = req.query.query.toUpperCase().split(' ');
+   
+    paperDB.find({ tags: { $all: searchParams } }, function (e, docs) {
+        res.render('index', { results: true, search: req.query.query, list: docs });
+    });
+};
 //update papers by id
+
 exports.update = (req, res) => {
     //validate the request
     if (!req.body) {
@@ -109,7 +147,8 @@ exports.update = (req, res) => {
 
     //update paper
     const id = req.params.id;
-    paperDB.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    console.log(id);
+    paperDB.findByIdAndUpdate(id, {$set:req.body}, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({ message: "Cannot update paper with id ${id}. Maybe paper not found!" })
@@ -124,23 +163,46 @@ exports.update = (req, res) => {
             });
         });
 }
-
-//delete papers by id
+    
 exports.delete = (req, res) => {
     const id = req.params.id;
+    console.log(id);
     paperDB.findByIdAndDelete(id)
         .then(data => {
             if (!data) {
                 res.status(404).send({ message: "Cannot delete paper with id ${id}. Maybe id is wrong!" })
             } else {
                 res.send({ message: "Paper deleted successfuly" });
+                
             }
 
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Could not delete the paper with id ${id}"
-            });
+                message: err.message || "Could not delete the paper with id "+{id}
+                        });
         });
 }
 
+var collection;
+exports.searchingbytext = async (req, res) => {
+
+    try{
+        let result = await collection.aggregate([
+         {
+             "$search":{
+                 "autocomplete": {
+                     "query": '${req.query.term}',
+                     "path":"name",
+                     "fuzzy":{
+                         "maxEdits":2
+                     }
+                 }
+             }
+         }
+        ]).toArray();
+        res.send(result);
+    }catch (err){
+        res.status(500).send({message: err.message});
+    }
+}
