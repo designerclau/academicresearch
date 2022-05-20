@@ -43,14 +43,17 @@ app.use(cors());
 app.use("/css", express.static(path.join(__dirname,"node_modules/mdb-ui-kit/css")));
 app.use("/js", express.static(path.join(__dirname,"node_modules/mdb-ui-kit/js")));
 
+var collection;
 //connect to database
 mongoose.connect( process.env.DB_connection, () =>
                   console.log('Connected to Db')
+                  
 
                   
  );
 
+ 
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3003;
 app.listen(port, () => console.log(`Listening on port ${port} `));
   

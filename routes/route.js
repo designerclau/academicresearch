@@ -35,7 +35,7 @@ route.get('/update_paper', services.update_paper);
 route.post('/api/papers', upload, controller.create);
 
 ////API to find text
-route.get('/look/:text', controller.findtext);
+route.get('/look/:tags', controller.findtext);
 
 route.get('/search', controller.search);
 
@@ -48,7 +48,32 @@ route.put('/api/papers/:id', upload, controller.update);
 //delete paper by id
 route.delete('/api/papers/:id', controller.delete);
 
-route.get('/searchingbytext', controller.searchingbytext);
+//route.get('/searchingbytext', controller.searchingbytext);
 
+function simplify(text){
+    const separators = /[s,.;:()-'+]/g;
+    const diacritics = /[u0300-u036f]/g;
+    //capitalização e normalização
+    text = text.toUpperCase().normalize("NFD").replace(diacritics, "");
+    //separando e removendo repetidos
+    const arr = text.split(separators).filter((item, pos, self) => self.indexOf(item) == pos);
+    console.log(arr);
+    //removendo nulls, undefineds e strings vazias
+    return arr.filter(item => (item));
+}
+/* GET home page. */
+route.get('/searching', function(req, res, next) {
+    if(!req.query.q)
+      return res.render('searching', { title: 'Motor de Busca', papers: [], query: '' });
+    else {
+      const query = req.query.q;
+      
+       paperDB.find({tags: {$all: query }})
+                 //.then(cursor => cursor.toArray())
+                 .then(papers => {
+                   return res.render('searching', {title: 'Motor de Busca', papers, query: req.query.q});
+                 })
+    }
+  });
 
 module.exports = route

@@ -5,6 +5,7 @@ const { vary } = require('express/lib/response');
 const conf = require('./services/conf.js');
 sw = require('stopword');
 const fs = require('fs');
+const { db } = require('./model/Post');
 //const { collection } = require('./model/Post');
 
 
@@ -20,7 +21,7 @@ exports.create = (req, res) => {
 
     //new paper
     var tagresult = [];
-   
+
     tagresult = generateTags(req.body.title);
     console.log(tagresult);
 
@@ -30,7 +31,7 @@ exports.create = (req, res) => {
         paperfile: req.file.filename,
         university: req.body.university,
         datepub: req.body.datepub,
-        tags:[tagresult]
+        tags: tagresult
     });
 
     //save paper
@@ -60,12 +61,36 @@ function generateTags(papers) {
     tags.push(newString);
     // console.log(tags);
 
-   
+
     return tags;
 
 }
 
-function removeDuplicates(data){
+
+function simplify(text){
+    const separators = /[s,.;:()-'+]/g;
+    const diacritics = /[u0300-u036f]/g;
+    //capitalização e normalização
+    text = text.toUpperCase().normalize("NFD").replace(diacritics, "");
+    //separando e removendo repetidos
+    const arr = text.split(separators).filter((item, pos, self) => self.indexOf(item) == pos);
+    console.log(arr);
+    //removendo nulls, undefineds e strings vazias
+    return arr.filter(item => (item));
+}
+ 
+function generateTags2(paper){
+    let tags = [];
+    var oldString = paper.split(' ');
+    var newString = sw.removeStopwords(oldString);
+    tags.push(paper.title);
+   // tags.push(movie.year.toString());
+ 
+    
+    return tags;
+}
+
+function removeDuplicates(data) {
     return [...new Set(data)]
 }
 
@@ -105,33 +130,30 @@ exports.find = (req, res) => {
 
 //list the title or body from the database * working
 
-exports.findtext = async(req, res) => {
+exports.findtext = async function (req, res, next) {
+    stopwords = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
 
-    stopwords = ['i','me','my','myself','we','our','ours','ourselves','you','your','yours','yourself','yourselves','he','him','his','himself','she','her','hers','herself','it','its','itself','they','them','their','theirs','themselves','what','which','who','whom','this','that','these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for','with','about','against','between','into','through','during','before','after','above','below','to','from','up','down','in','out','on','off','over','under','again','further','then','once','here','there','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','s','t','can','will','just','don','should','now']
-
-    var query = req.params.text;
-    console.log(query);
-    try
-    {
-      // remove stopwords is not working
-      // var newString = sw.removeStopwords(query);
-       var queryString=JSON.stringify(query);
-      // const paper = await paperDB.find({"$tags": { $search: queryString }});
-      
-      const paper = await paperDB.find({"tags": { $in: ["blog"] }}).pretty()
-       res.json(paper);
-    } catch (error){
-        res.status(500).json({ message: error.message});
+    console.log(req.params.tags);
+    var queryString=JSON.stringify(req.params.tags);
+    try {
+        let result = await paperDB.find({"$tags": { $search: queryString }});
+        res.send(result);
     }
-    
-}
+    catch (err) {
+        res.status(500).send({ message: err.message })
+    }
+
+};
+
+
+
 
 
 /* GET search page. */
-exports.search = async(req, res) => {
+exports.search = async (req, res) => {
 
     var searchParams = req.query.query.toUpperCase().split(' ');
-   
+
     paperDB.find({ tags: { $all: searchParams } }, function (e, docs) {
         res.render('index', { results: true, search: req.query.query, list: docs });
     });
@@ -148,7 +170,7 @@ exports.update = (req, res) => {
     //update paper
     const id = req.params.id;
     console.log(id);
-    paperDB.findByIdAndUpdate(id, {$set:req.body}, { useFindAndModify: false })
+    paperDB.findByIdAndUpdate(id, { $set: req.body }, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({ message: "Cannot update paper with id ${id}. Maybe paper not found!" })
@@ -163,7 +185,7 @@ exports.update = (req, res) => {
             });
         });
 }
-    
+
 exports.delete = (req, res) => {
     const id = req.params.id;
     console.log(id);
@@ -173,36 +195,15 @@ exports.delete = (req, res) => {
                 res.status(404).send({ message: "Cannot delete paper with id ${id}. Maybe id is wrong!" })
             } else {
                 res.send({ message: "Paper deleted successfuly" });
-                
+
             }
 
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Could not delete the paper with id "+{id}
-                        });
+                message: err.message || "Could not delete the paper with id " + { id }
+            });
         });
 }
 
-var collection;
-exports.searchingbytext = async (req, res) => {
 
-    try{
-        let result = await collection.aggregate([
-         {
-             "$search":{
-                 "autocomplete": {
-                     "query": '${req.query.term}',
-                     "path":"name",
-                     "fuzzy":{
-                         "maxEdits":2
-                     }
-                 }
-             }
-         }
-        ]).toArray();
-        res.send(result);
-    }catch (err){
-        res.status(500).send({message: err.message});
-    }
-}
